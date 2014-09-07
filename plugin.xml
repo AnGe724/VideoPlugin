@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="com.anh724.cordova.plugin.videorecordpreview"
+        version="1.0.0dev">
+
+    <name>VideoRecordPreview</name>
+
+    <description>The purpose of the plugin is to create an platform independent javascript interface for Cordova based mobile applications to record&preview of the video using camera on android, iOS platform.</description>
+    <repo>https://github.com/dantesanh724/cordova-plugin-video-record-preview.git</repo>
+    <keywords>video, record, preview, ios</keywords>
+    <license>Apache 2.0</license>
+
+    <author>AnH724</author>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <js-module src="www/videorecpreview.js" name="VideoRecordPreviewPlugin">
+        <clobbers target="plugin.videorecordpreview" />
+        <clobbers target="Camera" />
+    </js-module>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="VideoRecPreview">
+                <param name="ios-package" value="VideoRecPreview" onload="true" />
+		<param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+	<!-- plugin header and source files -->
+        <header-file src="src/ios/VideoRecPreview.h" />
+        <source-file src="src/ios/VideoRecPreview.m" />
+
+	<!-- App -->
+	<header-file src="src/ios/App/PBJFocusView.h" />
+        <source-file src="src/ios/App/PBJFocusView.m" />
+	<header-file src="src/ios/App/PBJStrobeView.h" />
+        <source-file src="src/ios/App/PBJStrobeView.m" />
+	<header-file src="src/ios/App/PBJVideoPlayerController.h" />
+        <source-file src="src/ios/App/PBJVideoPlayerController.m" />
+	<header-file src="src/ios/App/PBJVideoView.h" />
+        <source-file src="src/ios/App/PBJVideoView.m" />
+	<header-file src="src/ios/App/PBJViewController.h" />
+        <source-file src="src/ios/App/PBJViewController.m" />
+	<header-file src="src/ios/App/PBJViewPlayer.h" />
+        <source-file src="src/ios/App/PBJViewPlayer.m" />
+
+	<!-- TYMProgressBarView -->
+	<header-file src="src/ios/TYMProgressBarView/TYMProgressBarView.h" />
+        <source-file src="src/ios/TYMProgressBarView/TYMProgressBarView.m" />
+
+	<!-- Vision -->
+	<header-file src="src/ios/Vision/PBJGLProgram.h" />
+        <source-file src="src/ios/Vision/PBJGLProgram.m" />
+	<header-file src="src/ios/Vision/PBJMediaWriter.h" />
+        <source-file src="src/ios/Vision/PBJMediaWriter.m" />
+	<header-file src="src/ios/Vision/PBJVision.h" />
+        <source-file src="src/ios/Vision/PBJVision.m" />
+	<header-file src="src/ios/Vision/PBJVisionUtilities.h" />
+        <source-file src="src/ios/Vision/PBJVisionUtilities.m" />
+
+	<!-- Resource files -->
+	<resource-file src="src/ios/Resource/video_sprites_Close.png" />
+	<resource-file src="src/ios/Resource/video_sprites_Focus inactive.png" />
+	<resource-file src="src/ios/Resource/video_sprites_Focus.png" />
+	<resource-file src="src/ios/Resource/video_sprites_inactive.png" />
+	<resource-file src="src/ios/Resource/video_sprites_Next.png" />
+	<resource-file src="src/ios/Resource/video_sprites_Record active.png" />
+	<resource-file src="src/ios/Resource/video_sprites_record inactive.png" />
+	<resource-file src="src/ios/Resource/video_sprites_revert inactive.png" />
+	<resource-file src="src/ios/Resource/video_sprites_revert.png" />
+	       	
+	<!-- system frameworks -->
+	<framework src="CoreVideo.framework" weak="true" />
+	<framework src="OpenGLES.framework" weak="true" />
+	<framework src="ImageIO.framework" weak="true" />
+	<framework src="GLKit.framework" weak="true" />
+	<framework src="AVFoundation.framework" weak="true" />
+	<framework src="Foundation.framework" weak="true" />
+    </platform>
+
+</plugin>
