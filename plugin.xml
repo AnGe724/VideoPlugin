@@ -64,15 +64,15 @@
         <source-file src="src/ios/Vision/PBJVisionUtilities.m" />
 
 	<!-- Resource files -->
-	<resource-file src="src/ios/Resource/video_sprites_Close.png" />
-	<resource-file src="src/ios/Resource/video_sprites_Focus inactive.png" />
-	<resource-file src="src/ios/Resource/video_sprites_Focus.png" />
-	<resource-file src="src/ios/Resource/video_sprites_inactive.png" />
-	<resource-file src="src/ios/Resource/video_sprites_Next.png" />
-	<resource-file src="src/ios/Resource/video_sprites_Record active.png" />
-	<resource-file src="src/ios/Resource/video_sprites_record inactive.png" />
-	<resource-file src="src/ios/Resource/video_sprites_revert inactive.png" />
-	<resource-file src="src/ios/Resource/video_sprites_revert.png" />
+	<resource-file src="src/ios/Resources/video_sprites_Close.png" />
+	<resource-file src="src/ios/Resources/video_sprites_Focus inactive.png" />
+	<resource-file src="src/ios/Resources/video_sprites_Focus.png" />
+	<resource-file src="src/ios/Resources/video_sprites_inactive.png" />
+	<resource-file src="src/ios/Resources/video_sprites_Next.png" />
+	<resource-file src="src/ios/Resources/video_sprites_Record active.png" />
+	<resource-file src="src/ios/Resources/video_sprites_record inactive.png" />
+	<resource-file src="src/ios/Resources/video_sprites_revert inactive.png" />
+	<resource-file src="src/ios/Resources/video_sprites_revert.png" />
 	       	
 	<!-- system frameworks -->
 	<framework src="CoreVideo.framework" weak="true" />
