@@ -61,7 +61,7 @@ window.plugin.videorecordpreview.startVideoRecordPreview(onSuccess, onCancel);
 ```
 
 This function record the video with camera of the phone and preview recorded video.
-The return value will be sent to the [onSuccess][onsuccess] function, it has string value as following formats;
+The return value will be sent to the [onsuccess] function, it has string value as following formats;
 ```javascript
 {
   '/private/var/mobile/Applications/6A.../video_....m4v'
