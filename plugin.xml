@@ -19,7 +19,6 @@
 
     <js-module src="www/VideoRecordPreviewPlugin.js" name="VideoRecordPreviewPlugin">
         <clobbers target="plugin.videorecordpreview" />
-        <clobbers target="Camera" />
     </js-module>
 
     <!-- ios -->
