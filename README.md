@@ -96,7 +96,7 @@ The return value will be sent to the [onsuccess] function, it has string value a
             
             function startVideoRecordPreview()
             {
-                window.plugin.videorecordpreview.startVideoRecordPreview(function(url){alert(url);}, function(error){alert(error);}, null);
+                window.plugin.videorecordpreview.startVideoRecordPreview(function(url){alert(url);}, function(error){alert(error);});
             }
         </script>
     </body>
