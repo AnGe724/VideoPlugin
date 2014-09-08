@@ -22,11 +22,6 @@ Through the [Command-line Interface][CLI]:
 # ~~ from master ~~
 cordova plugin add https://github.com/dantesanh724/VideoPlugin.git && cordova prepare
 ```
-or to use the last stable version:
-```bash
-# ~~ stable version ~~
-cordova plugin add com.anh724.cordova.plugin.videorecordpreview && cordova prepare
-```
 
 ### Removing the Plugin from your project
 Through the [Command-line Interface][CLI]:
@@ -62,7 +57,7 @@ document.addEventListener('deviceready', function () {
 Retrieves recorded path from the device.<br>
 
 ```javascript
-window.plugin.videorecordpreview.startVideoRecordPreview(onSuccess, onCancel, options);
+window.plugin.videorecordpreview.startVideoRecordPreview(onSuccess, onCancel);
 ```
 
 This function record the video with camera of the phone and preview recorded video.
