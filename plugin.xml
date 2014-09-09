@@ -72,6 +72,11 @@
 	<resource-file src="src/ios/Resources/video_sprites_record inactive.png" />
 	<resource-file src="src/ios/Resources/video_sprites_revert inactive.png" />
 	<resource-file src="src/ios/Resources/video_sprites_revert.png" />
+	<resource-file src="src/ios/Resources/capture_focus@2x.png" />
+	<resource-file src="src/ios/Resources/capture_focus_button_active@2x.png" />
+	<resource-file src="src/ios/Resources/capture_rec_base@2x.png" />
+	<resource-file src="src/ios/Resources/capture_rec_blink@2x.png" />
+	<resource-file src="src/ios/Resources/capture_rec_off@2x.png" />
 	       	
 	<!-- system frameworks -->
 	<framework src="CoreVideo.framework" weak="true" />
