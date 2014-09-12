@@ -88,6 +88,13 @@ public class VideoPreview extends Activity {
         public void onClick(View v) {
             m_VideoView.stopPlayback();
 
+            Intent intent = new Intent(VideoPreview.this, VideoRecord.class);
+
+            if (intent != null)
+            {
+                startActivity(intent);
+            }
+            
             finish();
         }
     };
@@ -95,6 +102,8 @@ public class VideoPreview extends Activity {
     private View.OnClickListener doneClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
+            finish();
         }
     };
 
