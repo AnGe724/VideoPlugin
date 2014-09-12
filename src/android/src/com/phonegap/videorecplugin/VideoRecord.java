@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
 import com.googlecode.javacv.*;
+import com.phonegap.video.R;
 
 import java.io.File;
 import java.io.IOException;

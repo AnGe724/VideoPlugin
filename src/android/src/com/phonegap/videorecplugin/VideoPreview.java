@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.os.*;
 import android.view.View;
 import android.widget.*;
+import com.phonegap.video.R;
 
 import java.io.File;
 
