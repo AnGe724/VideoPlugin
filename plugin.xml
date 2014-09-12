@@ -104,7 +104,6 @@
 	                android:configChanges="keyboardHidden|orientation|screenSize"
 	                android:theme="@android:style/Theme.Black.NoTitleBar">
 	        </activity>
-	        
 	        <activity
 	                android:name="com.phonegap.videorecplugin.VideoPreview"
 	                android:configChanges="keyboardHidden|orientation|screenSize"

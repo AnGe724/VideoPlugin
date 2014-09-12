@@ -92,11 +92,11 @@ The return value will be sent to the [onsuccess] function, it has string value a
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
-            app.initialize();
-            function startVideoRecordPreview()
-            {
-                window.plugin.videorecordpreview.startVideoRecordPreview(function(url){alert(url);}, function(error){alert(error);});
-            }
+            
+	    app.initialize();
+
+	    window.plugin.videorecordpreview.startVideoRecordPreview(function(url){alert(url);}, function(error){alert(error);});
+
         </script>
     </body>
 </html>
