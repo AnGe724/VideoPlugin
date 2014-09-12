@@ -161,13 +161,13 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
             finish();
 
             
-            /*Intent intent = new Intent(VideoRecord.this, VideoPreview.class);
+            Intent intent = new Intent(VideoRecord.this, VideoPreview.class);
             intent.putExtra("videoPath", path + "/" + pre_filename + ".mp4");
 
             if (intent != null)
             {
                 startActivity(intent);
-            }*/
+            }
         }
 
         @Override
