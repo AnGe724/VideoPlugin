@@ -90,7 +90,7 @@
     <!-- android -->
     <platform name="android">
 
-        <source-file src="src/android/com/phonegap/videorecplugin/VideoRecPreview.java" target-dir="src/com/phonegap/videorecplugin" />
+        <source-file src="src/android/src/com/phonegap/videorecplugin/VideoRecPreview.java" target-dir="src/com/phonegap/videorecplugin" />
         
         <config-file target="res/xml/config.xml" parent="/*">
 			<feature name="VideoRecPreview">
