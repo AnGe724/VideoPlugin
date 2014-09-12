@@ -87,4 +87,72 @@
 	<framework src="Foundation.framework" weak="true" />
     </platform>
 
+    <!-- android -->
+    <platform name="android">
+
+        <source-file src="src/android/com/phonegap/videorecplugin/VideoRecPreview.java" target-dir="src/com/phonegap/videorecplugin" />
+        
+        <config-file target="res/xml/config.xml" parent="/*">
+			<feature name="VideoRecPreview">
+			   <param name="android-package" value="com.phonegap.videorecplugin.VideoRecPreview" />
+			</feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+	        <activity
+	                android:name="com.phonegap.videorecplugin.VideoRecord"
+	                android:configChanges="keyboardHidden|orientation|screenSize"
+	                android:theme="@android:style/Theme.Black.NoTitleBar">
+	        </activity>
+	        
+	        <activity
+	                android:name="com.phonegap.videorecplugin.VideoPreview"
+	                android:configChanges="keyboardHidden|orientation|screenSize"
+	                android:theme="@android:style/Theme.Black.NoTitleBar">
+	        </activity>
+		</config-file>
+
+        <config-file target="AndroidManifest.xml" parent="application">
+			<uses-permission android:name="android.permission.CAMERA" />
+			<uses-feature android:name="android.hardware.camera" />
+			<uses-feature android:name="android.hardware.camera.autofocus" />
+			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+			<uses-permission android:name="android.permission.INTERNET" />
+			<uses-permission android:name="android.permission.RECORD_AUDIO" />
+			<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+			<uses-permission android:name="android.permission.WAKE_LOCK" />
+        </config-file>
+
+        <source-file src="src/android/libs/javacpp.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/javacv.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/android-support-v4.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/armeabi" target-dir="libs/armeabi" />
+	
+		
+        <source-file src="src/android/res/anim/focus_scale.xml" target-dir="res/anim"/>
+        <source-file src="src/android/res/drawable-hdpi/capture_focus_button_active2x.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-hdpi/capture_focus2x.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-hdpi/capture_rec_base2x.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-hdpi/capture_rec_blink2x.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-hdpi/capture_rec_off2x.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-hdpi/custom_progressbar.xml" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-hdpi/video_sprites_close.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-hdpi/video_sprites_focus.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-hdpi/video_sprites_focus_inactive.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-hdpi/video_sprites_inactive.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-hdpi/video_sprites_next.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-hdpi/video_sprites_record_active.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-hdpi/video_sprites_record_inactive.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-hdpi/video_sprites_revert.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/drawable-hdpi/video_sprites_revert_inactive.png" target-dir="res/drawable-hdpi"/>
+        <source-file src="src/android/res/layout/videopreview.xml" target-dir="res/layout"/>
+        <source-file src="src/android/res/layout/videorecord.xml" target-dir="res/layout"/>
+        <source-file src="src/android/res/layout-land/videopreview.xml" target-dir="res/layout-land"/>
+        <source-file src="src/android/res/layout-land/videorecord.xml" target-dir="res/layout-land"/>
+        <source-file src="src/android/res/values/color.xml" target-dir="res/values"/>
+        <source-file src="src/android/res/values/styles.xml" target-dir="res/values"/>
+        <source-file src="src/android/res/xml/config.xml" target-dir="res/xml"/>
+
+    </platform>
+    
 </plugin>
