@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:id="@+id/linearRoot">
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp" android:layout_gravity="center" android:layout_weight="0.7"
+            android:background="@color/background" android:id="@+id/statusView" android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent" android:layout_weight="1">
+        </LinearLayout>
+        <ImageView
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/imgClose" android:src="@drawable/video_sprites_close" android:layout_weight="3"/>
+        <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_height="fill_parent"
+                      android:layout_weight="1" android:id="@+id/linearLayout3"/>
+        <ProgressBar
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar" android:layout_weight="9"
+                style="?android:attr/progressBarStyleHorizontal" android:layout_gravity="center"
+                android:progressDrawable="@drawable/custom_progressbar" android:max="100" android:progress="100"/>
+        <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_height="fill_parent"
+                      android:layout_weight="1" android:id="@+id/linearLayout4"/>
+        <ImageView android:layout_width="0dp" android:layout_height="fill_parent" android:id="@+id/imgDone"
+                   android:src="@drawable/video_sprites_inactive" android:layout_weight="3"/>
+        <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_height="fill_parent"
+                      android:layout_weight="1" android:id="@+id/linearLayout"/>
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="0dp"
+                  android:layout_gravity="center" android:id="@+id/videoView" android:layout_weight="4"
+                  android:background="@color/background">
+        <VideoView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/VideoView" android:layout_gravity="center"/>
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="0dp"
+                  android:layout_gravity="center" android:id="@+id/controlView" android:layout_weight="1"
+                  android:background="@color/background" android:paddingTop="10dp" android:paddingBottom="10dp">
+    </LinearLayout>
+</LinearLayout>
+
