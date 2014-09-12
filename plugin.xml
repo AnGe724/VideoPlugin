@@ -91,6 +91,8 @@
     <platform name="android">
 
         <source-file src="src/android/src/com/phonegap/videorecplugin/VideoRecPreview.java" target-dir="src/com/phonegap/videorecplugin" />
+        <source-file src="src/android/src/com/phonegap/videorecplugin/VideoRecord.java" target-dir="src/com/phonegap/videorecplugin" />
+        <source-file src="src/android/src/com/phonegap/videorecplugin/VideoPreview.java" target-dir="src/com/phonegap/videorecplugin" />
         
         <config-file target="res/xml/config.xml" parent="/*">
 			<feature name="VideoRecPreview">
