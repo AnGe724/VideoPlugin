@@ -114,7 +114,7 @@
 	        </activity>
 	</config-file>
 
-        <config-file target="AndroidManifest.xml" parent="manifest">
+        <config-file target="AndroidManifest.xml" parent="/manifest">
 		<uses-permission android:name="android.permission.CAMERA" />
 		<uses-feature android:name="android.hardware.camera" />
 		<uses-feature android:name="android.hardware.camera.autofocus" />
