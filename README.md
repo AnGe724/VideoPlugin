@@ -7,6 +7,7 @@ Record &amp; Preview Video Phonegap Plugin for iOS &amp; Android.
 This plugin records video with camera of the phone and previews recorded video.
 
 ## Supported Platforms
+- **Android**<br>
 - **iOS**<br>
 
 ## Dependencies
