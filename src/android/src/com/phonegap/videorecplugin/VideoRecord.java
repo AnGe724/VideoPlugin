@@ -37,6 +37,7 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
     boolean bRecording = false;
     boolean bUsecamera = true;
     boolean bPreviewRunning = false;
+    boolean bDone = false;
     boolean bRevert = true; // true: back camera, false: front camera
     boolean bFocus = false;
     boolean bScreenOrientation = true; // true: portrait, false: landscape
@@ -100,6 +101,12 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
                         m_progressbar.setProgress(leftTime);
 
                         customHandler.sendEmptyMessageDelayed(0, 1000);
+
+                        if (leftTime > 2)
+                        {
+                            bDone = true;
+                            m_imgDone.setImageResource(R.drawable.video_sprites_next);
+                        }
                     }
                     else
                     {
@@ -115,6 +122,9 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
                         }
 
                         bRecording = false;
+                        bDone = false;
+
+                        m_imgDone.setImageResource(R.drawable.video_sprites_inactive);
 
                         m_prgDialog.setMessage("Please wait for saving...");
                         m_prgDialog.setCancelable(false);
@@ -280,6 +290,29 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
     private View.OnClickListener doneClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
+            if (!bDone)
+                return;
+
+            try {
+                m_recorder.stop();
+                m_recorder.release();
+
+                m_camera.release();
+
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+                finish();
+            }
+
+            bRecording = false;
+            bDone = false;
+
+            m_prgDialog.setMessage("Please wait for saving...");
+            m_prgDialog.setCancelable(false);
+            m_prgDialog.show();
+
+            new LongOperation().execute("");
         }
     };
 
