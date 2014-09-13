@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.*;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.*;
 import android.util.DisplayMetrics;
