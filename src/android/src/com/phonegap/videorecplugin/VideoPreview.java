@@ -81,6 +81,21 @@ public class VideoPreview extends Activity {
         m_imgDone.setOnClickListener(doneClickListener);
 
         m_imgDone.setImageResource(R.drawable.video_sprites_next);
+
+        setVideoViewSize();
+    }
+
+    private void setVideoViewSize()
+    {
+        DisplayMetrics metrics = new DisplayMetrics(); getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        android.widget.LinearLayout.LayoutParams params = (android.widget.LinearLayout.LayoutParams) m_VideoView.getLayoutParams();
+
+        params.width = metrics.widthPixels;
+        params.height = metrics.heightPixels;
+        //params.height = (int)(metrics.heightPixels * 2 / 3);
+        params.leftMargin = 0;
+        m_VideoView.setLayoutParams(params);
     }
 
     private View.OnClickListener closeClickListener = new View.OnClickListener() {
@@ -123,5 +138,7 @@ public class VideoPreview extends Activity {
             m_statusView.setPadding(0, (int)(5 * scale + 0.5f), 0, (int)(5 * scale + 0.5f));
             m_controlView.setPadding(0, (int)(10 * scale + 0.5f), 0, (int)(10 * scale + 0.5f));
         }
+
+        setVideoViewSize();
     }
 }

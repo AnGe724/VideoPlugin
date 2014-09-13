@@ -20,15 +20,16 @@
                 android:layout_height="fill_parent"
                 android:id="@+id/imgClose" android:src="@drawable/video_sprites_close" android:layout_weight="3"/>
         <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_height="fill_parent"
-                      android:layout_weight="1" android:id="@+id/linearLayout3"/>
-        <ProgressBar
-                android:layout_width="0dp"
+                      android:layout_weight="0.2" android:id="@+id/linearLayout3">
+        </LinearLayout>
+        <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/progressBar" android:layout_weight="9"
-                style="?android:attr/progressBarStyleHorizontal" android:layout_gravity="center"
-                android:progressDrawable="@drawable/custom_progressbar" android:max="100" android:progress="100"/>
+                android:text="Review your glance"
+                android:id="@+id/textView" android:layout_gravity="center" android:textSize="14dp"
+                android:textColor="@color/white"/>
         <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_height="fill_parent"
-                      android:layout_weight="1" android:id="@+id/linearLayout4"/>
+                      android:layout_weight="1.8" android:id="@+id/linearLayout4"/>
         <ImageView android:layout_width="0dp" android:layout_height="fill_parent" android:id="@+id/imgDone"
                    android:src="@drawable/video_sprites_inactive" android:layout_weight="3"/>
         <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_height="fill_parent"
@@ -36,7 +37,7 @@
     </LinearLayout>
     <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="0dp"
                   android:layout_gravity="center" android:id="@+id/videoView" android:layout_weight="4"
-                  android:background="@color/background">
+            >
         <VideoView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"

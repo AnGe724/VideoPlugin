@@ -30,11 +30,14 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
     private SurfaceHolder m_surfaceHolder;
     private CamcorderProfile m_camcorderProfile;
     private Camera m_camera;
+    private int m_previewCameraRotationDegree = 0;
+    private int m_saveCameraRotationDegree = 0;
+
 
     boolean bRecording = false;
     boolean bUsecamera = true;
     boolean bPreviewRunning = false;
-    boolean bRevert = false; // true: back camera, false: front camera
+    boolean bRevert = true; // true: back camera, false: front camera
     boolean bFocus = false;
     boolean bScreenOrientation = true; // true: portrait, false: landscape
 
@@ -88,6 +91,9 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
             {
                 if (msg.what == 0)
                 {
+                    if (!bRecording)
+                        return;
+
                     leftTime ++;
                     if (leftTime <= duration)
                     {
@@ -136,6 +142,7 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
 
             } catch (Exception e)
             {
+
             }
 
             return "Executed";
@@ -147,20 +154,20 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
             // might want to change "executed" for the returned string passed
             // into onPostExecute() but that is upto you
 
-        	m_prgDialog.dismiss();
+            m_prgDialog.dismiss();
 
             m_imgRecord.setImageResource(R.drawable.video_sprites_record_inactive);
 
             fileIdx = 0;
             leftTime = 0;
 
-            
+
             Intent callbackIntent = new Intent();
             callbackIntent.putExtra ("VideoPath", path + "/" + pre_filename + ".mp4");
             setResult(RESULT_OK, callbackIntent);
             finish();
 
-            
+
             Intent intent = new Intent(VideoRecord.this, VideoPreview.class);
             intent.putExtra("videoPath", path + "/" + pre_filename + ".mp4");
 
@@ -197,8 +204,8 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
     @Override
     public void onStop() {
         super.onStop();
-        
-        
+
+
     }
 
     private void getControlVariables()
@@ -258,6 +265,8 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
             m_statusView.setPadding(0, (int)(5 * scale + 0.5f), 0, (int)(5 * scale + 0.5f));
             m_controlView.setPadding(0, (int)(10 * scale + 0.5f), 0, (int)(10 * scale + 0.5f));
         }
+
+        setCameraRotationDegree();
     }
 
     private View.OnClickListener closeClickListener = new View.OnClickListener() {
@@ -293,26 +302,25 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
 
             if (bRevert)
             {
-                m_camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
-
-                m_imgRevert.setImageResource(R.drawable.video_sprites_revert);
-            }
-            else
-            {
                 m_camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
 
                 m_imgRevert.setImageResource(R.drawable.video_sprites_revert_inactive);
             }
+            else
+            {
+                m_camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
 
+                m_imgRevert.setImageResource(R.drawable.video_sprites_revert);
+            }
+
+            bRevert = !bRevert;
 
             try {
                 Camera.Parameters parameters = m_camera.getParameters();
-                Display display = ((WindowManager)getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
 
-                if(display.getRotation() == Surface.ROTATION_0)
-                    m_camera.setDisplayOrientation(90);
+                setCameraRotationDegree();
 
-                //m_camera.stopFaceDetection();
+                m_camera.setDisplayOrientation(m_previewCameraRotationDegree);
                 m_camera.setParameters(parameters);
                 m_camera.setPreviewDisplay(m_surfaceHolder);
                 m_camera.startPreview();
@@ -323,8 +331,9 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
                     m_recorder = new MediaRecorder();
 
                     m_camera.unlock();
-
                     m_recorder.setCamera(m_camera);
+                    m_recorder.setOrientationHint(m_saveCameraRotationDegree);
+                    //m_recorder.setVideoSize(m_surfaceview.getWidth(), m_surfaceview.getHeight());
                     m_recorder.setPreviewDisplay(m_surfaceHolder.getSurface());
                     m_recorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
                     m_recorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
@@ -356,8 +365,6 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            bRevert = !bRevert;
         }
     };
     private View.OnClickListener recordClickListener = new View.OnClickListener() {
@@ -411,7 +418,8 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
             recorder.start();
 
             Frame frame1;
-            while ((frame1 = grabber1.grabFrame()) != null) {
+            while ((frame1 = grabber1.grabFrame()) != null)
+            {
                 recorder.record(frame1);
             }
 
@@ -475,6 +483,9 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
         if (!bFocus)
             return true;
 
+        if (m_camera == null)
+            return true;
+
         int action = event.getAction();
         switch(action)
         {
@@ -524,7 +535,7 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
     };
 
     private void setAutoFocusArea(Camera camera, int posX, int posY,
-        int focusRange, Point point) {
+                                  int focusRange, Point point) {
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             return;
@@ -580,7 +591,7 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
         ArrayList<Camera.Area> arraylist = new ArrayList<Camera.Area>();
         arraylist.add(new Camera.Area(rect, 1000));
 
-        setArea(camera, arraylist);
+        setArea(m_camera, arraylist);
     }
 
     private void setArea(Camera camera, List<Camera.Area> list) {
@@ -621,6 +632,9 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
             m_camera.unlock();
             m_recorder.setCamera(m_camera);
         }
+        m_recorder.setOrientationHint(m_saveCameraRotationDegree);
+        //m_recorder.setVideoSize(m_videoView.getWidth(), m_videoView.getHeight());
+        //m_recorder.setVideoSize(800, 400);
         m_recorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
         m_recorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
 
@@ -628,7 +642,8 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
 
         fileIdx ++;
 
-        pre_filename =  "VideoRecord" + "" + new SimpleDateFormat("ddMMyyyyHHmmss").format(new Date());
+        if (fileIdx == 1)
+            pre_filename =  "VideoRecord" + "" + new SimpleDateFormat("ddMMyyyyHHmmss").format(new Date());
 
         filename = pre_filename + fileIdx + ".mp4";
         //filename = "VideoRecord" + Build.MODEL + fileIdx +  ".mp4";
@@ -649,6 +664,56 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
         }
     }
 
+    private void setCameraRotationDegree()
+    {
+        Display display = ((WindowManager)getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+
+        if (bRevert)
+        {
+            if(display.getRotation() == Surface.ROTATION_0)
+            {
+                m_previewCameraRotationDegree = 90;
+            }
+            else if(display.getRotation() == Surface.ROTATION_90)
+            {
+                m_previewCameraRotationDegree = 0;
+            }
+            else if(display.getRotation() == Surface.ROTATION_180)
+            {
+                m_previewCameraRotationDegree = 90;
+            }
+            else if(display.getRotation() == Surface.ROTATION_270)
+            {
+                m_previewCameraRotationDegree = 180;
+            }
+
+            m_saveCameraRotationDegree = m_previewCameraRotationDegree;
+        }
+        else
+        {
+            if(display.getRotation() == Surface.ROTATION_0)
+            {
+                m_previewCameraRotationDegree = 90;
+                m_saveCameraRotationDegree = 270;
+            }
+            else if(display.getRotation() == Surface.ROTATION_90)
+            {
+                m_previewCameraRotationDegree = 0;
+                m_saveCameraRotationDegree = 0;
+            }
+            else if(display.getRotation() == Surface.ROTATION_180)
+            {
+                m_previewCameraRotationDegree = 90;
+                m_saveCameraRotationDegree = 90;
+            }
+            else if(display.getRotation() == Surface.ROTATION_270)
+            {
+                m_previewCameraRotationDegree = 180;
+                m_saveCameraRotationDegree = 180;
+            }
+        }
+    }
+
     public void surfaceCreated(SurfaceHolder holder) {
         System.out.println("onsurfacecreated");
 
@@ -656,16 +721,16 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
 
             if (bRevert)
             {
-                m_camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
-                m_imgRevert.setImageResource(R.drawable.video_sprites_revert_inactive);
-            }
-            else
-            {
                 m_camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
                 m_imgRevert.setImageResource(R.drawable.video_sprites_revert);
             }
-            
-            try 
+            else
+            {
+                m_camera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
+                m_imgRevert.setImageResource(R.drawable.video_sprites_revert_inactive);
+            }
+
+            try
             {
                 //m_camera.stopFaceDetection();
                 m_camera.setPreviewDisplay(holder);
@@ -689,29 +754,10 @@ public class VideoRecord extends Activity implements SurfaceHolder.Callback {
 
             try {
                 Camera.Parameters parameters = m_camera.getParameters();
-                Display display = ((WindowManager)getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
 
-                if(display.getRotation() == Surface.ROTATION_0)
-                {
-                    //parameters.setPreviewSize(height, width);
-                    m_camera.setDisplayOrientation(90);
-                }
-                else if(display.getRotation() == Surface.ROTATION_90)
-                {
-                    //parameters.setPreviewSize(width, height);
-                    m_camera.setDisplayOrientation(0);
-                }
-                else if(display.getRotation() == Surface.ROTATION_180)
-                {
-                    //parameters.setPreviewSize(height, width);
-                    m_camera.setDisplayOrientation(90);
-                }
-                else if(display.getRotation() == Surface.ROTATION_270)
-                {
-                    //parameters.setPreviewSize(width, height);
-                    m_camera.setDisplayOrientation(180);
-                }
+                setCameraRotationDegree();
 
+                m_camera.setDisplayOrientation(m_previewCameraRotationDegree);
                 m_camera.setParameters(parameters);
                 m_camera.setPreviewDisplay(m_surfaceHolder);
                 m_camera.startPreview();
