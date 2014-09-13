@@ -24,6 +24,10 @@ public class VideoPreview extends Activity {
 
     String videoPath = "";
 
+    boolean bShowHideControlbar = true;
+
+    Handler showhideHandler = new Handler();
+
     /**
      * Called when the activity is first created.
      */
@@ -62,6 +66,21 @@ public class VideoPreview extends Activity {
                 //Toast.makeText(this, "Error connecting", Toast.LENGTH_SHORT).show();
             }
         }
+
+        showhideHandler = new Handler()
+        {
+            @Override
+            public void handleMessage(Message msg)
+            {
+                if (msg.what == 0)
+                {
+                    if (bShowHideControlbar)
+                        showhideControlbar();
+                }
+            }
+        };
+
+        showhideHandler.sendEmptyMessageDelayed(0, 2000);
     }
 
     private void getControlVariables()
@@ -80,6 +99,21 @@ public class VideoPreview extends Activity {
     {
         m_imgClose.setOnClickListener(closeClickListener);
         m_imgDone.setOnClickListener(doneClickListener);
+
+        //m_VideoView.setOnTouchListener(showhideControlbarTouchListener);
+        m_VideoView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // do nothing here......
+
+                if (event.getAction() != MotionEvent.ACTION_UP)
+                    return true;
+
+                showhideControlbar();
+
+                return true;
+            }
+        });
 
         m_imgDone.setImageResource(R.drawable.video_sprites_next);
 
@@ -122,6 +156,33 @@ public class VideoPreview extends Activity {
             finish();
         }
     };
+
+    public void showhideControlbar() {
+
+        android.widget.LinearLayout.LayoutParams statusParams = (android.widget.LinearLayout.LayoutParams) m_statusView.getLayoutParams();
+        android.widget.LinearLayout.LayoutParams controlParams = (android.widget.LinearLayout.LayoutParams) m_controlView.getLayoutParams();
+
+        if (bShowHideControlbar)
+        {
+            statusParams.weight = 0;
+            m_statusView.setLayoutParams(statusParams);
+
+            controlParams.weight = 0;
+            m_controlView.setLayoutParams(controlParams);
+        }
+        else
+        {
+            statusParams.weight = 0.7f;
+            m_statusView.setLayoutParams(statusParams);
+
+            controlParams.weight = 1;
+            m_controlView.setLayoutParams(controlParams);
+
+            showhideHandler.sendEmptyMessageDelayed(0, 2000);
+        }
+
+        bShowHideControlbar = !bShowHideControlbar;
+    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
