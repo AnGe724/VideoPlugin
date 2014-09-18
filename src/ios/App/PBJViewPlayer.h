@@ -24,11 +24,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <JavaScriptCore/JavaScriptCore.h>
 
-@interface PBJViewPlayer : UIViewController{
+@class PBJViewPlayer;
+
+@protocol PBJViewPlayerDelegate
+- (void)didReviewDone:(PBJViewPlayer *)player;
+@end
+                       
+@interface PBJViewPlayer : UIViewController<UIWebViewDelegate>{
 
     NSString *vPath;
+    
+
 }
 @property (nonatomic, retain) NSString *vPath;
+
+@property (nonatomic, retain) id<PBJViewPlayerDelegate> delegate;
 
 @end
