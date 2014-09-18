@@ -69,7 +69,9 @@
 @interface PBJViewController () <
 UIGestureRecognizerDelegate,
 PBJVisionDelegate,
-UIAlertViewDelegate>
+UIAlertViewDelegate,
+PBJViewPlayerDelegate
+>
 {
     PBJStrobeView *_strobeView;
     UIButton *_doneButton;
@@ -341,11 +343,18 @@ int j=0;
     _captureDock.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:_captureDock];
     
+    CGFloat eachSectionWidth = viewWidth / 3;
+    CGFloat eachSectionCenterWidth = (viewWidth / 3) / 2;
+    CGFloat eachSectionHeight = CGRectGetHeight(self.view.bounds) - 90.0f - CGRectGetWidth(self.view.bounds);
+    CGFloat eachSectionCenterHeight = (eachSectionHeight - 25.0f) / 2;
+    CGFloat eachSectionCenterTop = 100.0f - eachSectionHeight + eachSectionCenterHeight;
+    
     // flip button
     _flipButton = [ExtendedHitButton extendedHitButton];
     UIImage *flipImage = [UIImage imageNamed:@"video_sprites_revert"];
     [_flipButton setBackgroundImage:flipImage forState:UIControlStateNormal];
-    CGRect flipFrame = CGRectMake(35.0f, 8.0f, 25.0f, 25.0f);
+    //CGRect flipFrame = CGRectMake(35.0f, 8.0f, 25.0f, 25.0f);
+    CGRect flipFrame = CGRectMake(eachSectionCenterWidth - 12.5f, eachSectionCenterTop, 25.0f, 25.0f);
     _flipButton.frame = flipFrame;
    [_flipButton setContentMode:UIViewContentModeScaleAspectFill];
     [_flipButton addTarget:self action:@selector(_handleFlipButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -360,7 +369,8 @@ int j=0;
     
     //CGRect focusFrame = _focusButton.frame;
     //focusFrame.origin = CGPointMake((CGRectGetWidth(self.view.bounds) * 0.5f) - (focusImage.size.width * 0.5f), 16.0f);
-    CGRect focusFrame = CGRectMake(260.0f, 8.0f, 25.0f, 25.0f);
+    //CGRect focusFrame = CGRectMake(260.0f, 8.0f, 25.0f, 25.0f);
+    CGRect focusFrame = CGRectMake(viewWidth - eachSectionCenterWidth - 12.5f, eachSectionCenterTop, 25.0f, 25.0f);
     // focusFrame.size = focusImage.size;
     _focusButton.frame = focusFrame;
     [_focusButton setContentMode:UIViewContentModeScaleAspectFill];
@@ -375,7 +385,9 @@ int j=0;
     _onionButton = [ExtendedHitButton extendedHitButton];
     UIImage *onionImage = [UIImage imageNamed:@"video_sprites_record inactive"];
     [_onionButton setBackgroundImage:onionImage forState:UIControlStateNormal];
-    CGRect onionFrame = CGRectMake(148.5f, 10.0f, 25.0f, 25.0f);
+    //CGRect onionFrame = CGRectMake(148.5f, 10.0f, 25.0f, 25.0f);
+    CGRect onionFrame = CGRectMake(eachSectionWidth * 2 - eachSectionCenterWidth - 12.5f, eachSectionCenterTop, 25.0f, 25.0f);
+
     _onionButton.frame = onionFrame;
     [_onionButton setContentMode:UIViewContentModeScaleAspectFill];
     //_onionButton.imageView.frame = _onionButton.bounds;
@@ -849,8 +861,8 @@ int j=0;
 
     PBJViewPlayer *controller = [[PBJViewPlayer alloc] init];
     controller.vPath = videoPath;
+    controller.delegate = self;
     [self presentViewController:controller animated:YES completion:nil];
-    
     
     /*[_assetLibrary writeVideoAtPathToSavedPhotosAlbum:[NSURL URLWithString:videoPath] completionBlock:^(NSURL *assetURL, NSError *error1) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Video Saved!" message: @"Saved to the camera roll."
@@ -859,6 +871,17 @@ int j=0;
                                               otherButtonTitles:@"OK", nil];
         [alert show];
     }];*/
+}
+
+#pragma mark - PJViewPlayerDelegate
+- (void)didReviewDone:(PBJViewPlayer *)player
+{
+    [self dismissViewControllerAnimated:NO completion:^(){
+        [self _handleBackButton:nil];
+    }];
+    
+    
+    
 }
 
 // progress
