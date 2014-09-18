@@ -25,7 +25,9 @@
 
 #import "PBJViewPlayer.h"
 #import "PBJVideoPlayerController.h"
+#import "JSCallFunctions.h"
 #import "PBJViewController.h"
+#import "DGGeofencing.h"
 
 
 @interface PBJViewPlayer () <
@@ -39,6 +41,7 @@
 
 @implementation PBJViewPlayer
 @synthesize vPath;
+
 
 #pragma mark - UIViewController status bar
 
@@ -88,6 +91,7 @@
 {
     [super viewDidLoad];
     [self.view setBackgroundColor: [self colorWithHexString:@"0BE7D5"]];
+    [JSCallFunctions loadJSWithRootViewController:self];
    
     UILabel *myLabel = [[UILabel alloc]initWithFrame:CGRectMake(73, 35, 200, 40)];
     [myLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0]];
@@ -132,10 +136,12 @@
     [backButton addTarget:self action:@selector(_handleBackButton:) forControlEvents:UIControlEventTouchUpInside];
     //_doneButton.enabled = NO;
     [self.view addSubview:backButton];
-    
-    _videoPlayerController.videoPath = vPath;    
-}
 
+    
+    
+    
+    _videoPlayerController.videoPath = vPath;
+}
 - (void)_handleBackButton:(UIButton *)button
 {
      [_videoPlayerController pause];
@@ -151,9 +157,27 @@
     
     
 }
+/*
+*/
 
 - (void)_handleDoneButton:(UIButton *)button
 {
+    [_videoPlayerController pause];
+    
+    _videoPlayerController = nil;
+    _videoPlayerController.view = nil;
+    _videoPlayerController.delegate = nil;
+    [_videoPlayerController.view removeFromSuperview];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    if (self.delegate)
+    {
+        [self.delegate didReviewDone:self];
+    }
+    else
+        [self dismissViewControllerAnimated:YES completion:nil];
+    
+    
 }
 
 
@@ -170,6 +194,8 @@
 
 - (void)videoPlayerPlaybackWillStartFromBeginning:(PBJVideoPlayerController *)videoPlayer
 {
+    
+   
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -182,6 +208,8 @@
     [_videoPlayerController.view removeFromSuperview];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super viewWillDisappear:animated];
+    
+    
 }
 
 - (void)videoPlayerPlaybackDidEnd:(PBJVideoPlayerController *)videoPlayer
