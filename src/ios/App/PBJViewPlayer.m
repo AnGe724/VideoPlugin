@@ -25,9 +25,7 @@
 
 #import "PBJViewPlayer.h"
 #import "PBJVideoPlayerController.h"
-#import "JSCallFunctions.h"
 #import "PBJViewController.h"
-#import "DGGeofencing.h"
 
 
 @interface PBJViewPlayer () <
@@ -91,7 +89,7 @@
 {
     [super viewDidLoad];
     [self.view setBackgroundColor: [self colorWithHexString:@"0BE7D5"]];
-    [JSCallFunctions loadJSWithRootViewController:self];
+    //[JSCallFunctions loadJSWithRootViewController:self];
    
     UILabel *myLabel = [[UILabel alloc]initWithFrame:CGRectMake(73, 35, 200, 40)];
     [myLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0]];
