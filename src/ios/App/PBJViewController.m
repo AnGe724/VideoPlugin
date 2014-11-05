@@ -633,6 +633,12 @@ int j=0;
 }
 - (void)_handleBackButton:(UIButton *)button
 {
+    //Added the code to call the Callback function when clicked the backbutton on preview screen.
+    dispatch_sync(_serialQueue, ^{
+        if ([_delegate respondsToSelector:@selector(getVideoPath:)])
+            [_delegate getVideoPath:@""];
+    });
+
     // resets long press
     _longPressGestureRecognizer.enabled = NO;
     _longPressGestureRecognizer.enabled = YES;
